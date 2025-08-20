@@ -10,6 +10,7 @@ namespace LeaveManagementSystem.Web.Mappings
         public AutoMapperProfile()
         {
             CreateMap<LeaveType, LeaveTypeReadOnlyVM>();
+            CreateMap<LeaveTypeCreateVM,LeaveType>();
         }
     }
 }
