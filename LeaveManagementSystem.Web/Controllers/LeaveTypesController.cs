@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using LeaveManagementSystem.Web.Data;
+using LeaveManagementSystem.Web.Models.LeaveTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LeaveManagementSystem.Web.Data;
-using LeaveManagementSystem.Web.Models.LeaveTypes;
-using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LeaveManagementSystem.Web.Controllers
 {
@@ -40,7 +41,7 @@ namespace LeaveManagementSystem.Web.Controllers
             //});
 
             //Using AutoMapper
-          var viewdata =  _mapper.Map<List<IndexVM>>(data);
+          var viewdata =  _mapper.Map<List<LeaveTypeReadOnlyVM>>(data);
 
             //Return the ViewModel to the View
 
@@ -62,7 +63,9 @@ namespace LeaveManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            return View(leaveType);
+            var viewdata = _mapper.Map<LeaveTypeReadOnlyVM>(leaveType);
+
+            return View(viewdata);
         }
 
         // GET: LeaveTypes/Create
