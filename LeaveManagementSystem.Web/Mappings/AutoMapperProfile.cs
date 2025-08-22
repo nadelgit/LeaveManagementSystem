@@ -11,6 +11,8 @@ namespace LeaveManagementSystem.Web.Mappings
         {
             CreateMap<LeaveType, LeaveTypeReadOnlyVM>();
             CreateMap<LeaveTypeCreateVM,LeaveType>();
+            CreateMap<LeaveTypeEditVM, LeaveType>().ReverseMap();
+            
         }
     }
 }
