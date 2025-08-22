@@ -81,6 +81,12 @@ namespace LeaveManagementSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LeaveTypeCreateVM leaveTypeCreate)
         {
+            if(await CheckIfLeaveTypeNameExists(leaveTypeCreate.Name))
+            {
+                ModelState.AddModelError(nameof(leaveTypeCreate.Name), "This name already exists in the database.");
+            }                
+
+            
             if (ModelState.IsValid)
             {
                 var leaveType = _mapper.Map<LeaveType>(leaveTypeCreate);
@@ -90,6 +96,8 @@ namespace LeaveManagementSystem.Web.Controllers
             }
             return View(leaveTypeCreate);
         }
+
+      
 
         // GET: LeaveTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -119,7 +127,10 @@ namespace LeaveManagementSystem.Web.Controllers
             {
                 return NotFound();
             }
-
+            //if (await CheckIfLeaveTypeNameExists(leaveTypeEdit.Name))
+            //{
+            //    ModelState.AddModelError(nameof(leaveTypeEdit.Name), "This name already exists in the database.");
+            //}
             if (ModelState.IsValid)
             {
                 try
@@ -182,6 +193,11 @@ namespace LeaveManagementSystem.Web.Controllers
         private bool LeaveTypeExists(int id)
         {
             return _context.LeaveTypes.Any(e => e.Id == id);
+        }
+        private async Task<bool> CheckIfLeaveTypeNameExists(string name)
+        {
+            var lowercasename = name.ToLower();
+            return await _context.LeaveTypes.AnyAsync(q => q.Name.ToLower().Equals(name));
         }
     }
 }
