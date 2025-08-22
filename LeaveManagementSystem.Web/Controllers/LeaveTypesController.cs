@@ -159,7 +159,9 @@ namespace LeaveManagementSystem.Web.Controllers
                 return NotFound();
             }
 
-            return View(leaveType);
+            var viewdata = _mapper.Map<LeaveTypeReadOnlyVM>(leaveType);
+
+            return View(viewdata);
         }
 
         // POST: LeaveTypes/Delete/5
